@@ -23,7 +23,7 @@ export class BaseService<T extends { id: number }> {
   }
 
   getAll(): void {
-    this.http.get<T[]>(`${this.config.apiUrl}/${this.entityName}`)
+    this.http.get<T[]>(`${this.config.apiUrl}/${this.entityName}`,{ withCredentials: true })
       .subscribe(
         list => this.list$.next(list),
         err => console.error(err)
@@ -31,7 +31,7 @@ export class BaseService<T extends { id: number }> {
   }
 
   get(id: number): Observable<T> {
-    return this.http.get<T>(`${this.config.apiUrl}/${this.entityName}/${id}`);
+    return this.http.get<T>(`${this.config.apiUrl}/${this.entityName}/${id}`,{ withCredentials: true });
   }
 
   create(entity: T): Observable<T> {

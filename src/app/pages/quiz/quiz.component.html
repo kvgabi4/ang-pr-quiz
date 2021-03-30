@@ -1,0 +1,54 @@
+<!--
+QuizComponent: megjeleníti az egyes Quiz -eket a tanulóknak. Kiírja a kérdést
+és a lehetséges válaszokat, a választás és a továbblépés után pedig jó válasz
+esetén növeli a pontokat, amelyek a nézet jobb felső sarkában láthatóak. Csak
+előre gomb kell, ne lehessen visszalépni. A megjelölt válasz vagy háttérszínnel,
+vagy checkbox -al legyen kiemelve. Elég az egyválasztós lehetőség, nem kell
+több kérdés típus. -->
+
+
+<div class="quiz card bg-light my-3">
+  <div class="card-header bg-primary text-white text-right">
+    <h4 class="font-weight-bold text-left" *ngIf="(quiz$ | async)?.title as title">{{title}}</h4>
+    <h4><span class="font-weight-bold">{{points}}</span> points</h4>
+  </div>
+  <div class="card-body">
+    <div *ngFor="let question of questions$ | async | slice:questionIdArray[serialNumber-1]:questionIdArray[serialNumber]">
+      <div *ngIf="(quiz$ | async)?.questions?.includes(question.id)">
+        <h1 class="text-secondary font-weight-bold">{{serialNumber+1}}</h1>
+        <h3 class="mx-5 my-3 text-primary">{{question.question}}</h3>
+        <form #myForm="ngForm" (ngSubmit)="nextQuestion(myForm.value, question)" class="mx-5" >
+          <div class="form-check" *ngFor="let answer of question.answers">
+            <label class="form-check-label mt-2" [for]="answer.id">
+              <input class="form-check-input mt-2" type="radio" [name]="answer.id" [id]="answer.id"
+                [value]="[answer.correct]" [(ngModel)]="choosen" required>
+              <h4 class="ml-3">{{answer.content}}</h4>
+            </label>
+          </div>
+
+          <!-- Next Button -->
+          <button [disabled]="myForm.invalid" type="submit" class="btn btn-primary btn-lg btn-block my-5">
+            Next question&nbsp;
+            <i class="fa fa-arrow-right" aria-hidden="true"></i>
+          </button>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Summary -->
+<div class="summary card rounded bg-light text-center my-3 hide">
+  <div class="card-header bg-primary text-white">
+    <h4 class="card-title bg-primary text-white text-uppercase pt-2">Summary</h4>
+    <h4 class="font-weight-bold mt-2" *ngIf="(quiz$ | async)?.title as title">{{title}}</h4>
+  </div>
+  <div class="card-body my-5">
+    <h5 class="card-text">Your total score:</h5>
+      <div class="h4 text-primary"><span class="font-weight-bold">{{points}}</span> points</div>
+  </div>
+  <div class="card-footer">
+    <a [routerLink]="">Choose another quize</a>
+  </div>
+</div>
