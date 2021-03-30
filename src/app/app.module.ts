@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { NavigationComponent } from './common/navigation/navigation.component';
 import { HomeComponent } from './pages/home/home.component';
 import { QuizComponent } from './pages/quiz/quiz.component';
+import { AdminComponent } from './pages/admin/admin.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { QuizComponent } from './pages/quiz/quiz.component';
     NavigationComponent,
     HomeComponent,
     QuizComponent,
+    AdminComponent,
   ],
   imports: [
     BrowserModule,

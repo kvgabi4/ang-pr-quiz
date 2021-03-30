@@ -42,7 +42,6 @@ export class QuizComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private quizService: QuizService,
     private questionService: QuestionService,
-    // private config: ConfigService,
   ) { }
 
   ngOnInit(): void {
@@ -52,7 +51,7 @@ export class QuizComponent implements OnInit {
     this.quiz$.subscribe(item => {
       this.questionIdArray = item.questions;
       this.color = this.colors[item.id - 1];
-      console.log(this.color)
+      // console.log(this.color)
     })
   }
 

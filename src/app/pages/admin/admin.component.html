@@ -1,0 +1,63 @@
+<!--
+AdminComponent: itt táblázatos formában jelennek meg a quiz -ek, minden sor
+végén van törlés és szerkesztés gomb. A táblázat szűrhető és rendezhető. Külön
+gomb van az új quiz létrehozására. -->
+
+<div class="row">
+  <div class="col-12 mt-2">
+
+    <!-- Search -->
+    <div class="search bg-light border rounded w-100 p-3 mt-5 d-flex flex-column flex-lg-row">
+      <span class="font-weight-bold text-uppercase col-lg-2 pt-2">Search by:</span>
+      <select class="form-control border col-3 col-12 col-lg-3 mr-lg-5 my-3 my-lg-0" [(ngModel)]="filterKey">
+        <option *ngFor="let key of filterKeys" [value]="[key]">{{key}}</option>
+      </select>
+      <input [(ngModel)]="phrase" class="filter-search border rounded col-lg-5 mx-lg-3" type="text" placeholder="Search...">
+    </div>
+
+    <!-- Add new -->
+    <div class="card card-plain my-3">
+      <button [routerLink]="['quiz-edit/0']" type="button" class="btn card bg-light btn-block btn-lg">
+        Add new quiz
+      </button>
+    </div>
+
+
+    <h2>Quiz List</h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th (click)="onColumnSelect('id')">#</th>
+          <th (click)="onColumnSelect('title')">Title</th>
+          <th (click)="onColumnSelect('description')">Description</th>
+          <th (click)="onColumnSelect('questions')">Questions</th>
+          <th (click)="onColumnSelect('active')">Active</th>
+          <th (click)="onColumnSelect('image')">Image</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- <tr *ngFor="let quiz of quizzes$ | async | filter:phrase:filterKey | sorter:columnKey"> -->
+        <tr *ngFor="let quiz of quizzes$ | async ">
+          <td>{{ quiz.id }}</td>
+          <td>{{ quiz.title }}</td>
+          <td>{{ quiz.description }}</td>
+          <td>{{ quiz.questions }}</td>
+          <td>{{ quiz.active }}</td>
+          <td><img class="quiz_image" [src]="quiz.image" [alt]="quiz.image"></td>
+          <td>
+            <div class="btn-group">
+              <button [routerLink]="['quiz/' + quiz.id]" class="btn btn-info">
+                <i class="fa fa-pencil"></i>
+              </button>
+              <button (click)="onDelete(quiz)" class="btn btn-danger">
+                <i class="fa fa-trash"></i>
+              </button>
+              <!-- <i *ngIf="!clicked" class="fa fa-save"></i> -->
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

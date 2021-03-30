@@ -21,9 +21,4 @@ export class HomeComponent implements OnInit {
     this.quizService.getAll();
   }
 
-  // chooseQuiz(quiz: Quiz): void {
-  //   this.quiz.emit(quiz);
-  //   console.log(quiz);
-  // }
-
 }

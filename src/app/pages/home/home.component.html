@@ -1,9 +1,19 @@
-<!-- <app-quiz [currentQuiz]="quiz"></app-quiz> -->
+<!--
+HomeComponent: itt listázza ki az alkalmazás kártyákon a quiz -eket. Ezek
+közül tud egyet választani a tanuló, és utána azt kitölteni. Kattintásra a
+QuizComponent nyílik meg az adott Quiz -el. A kis kártyákon látszik a Quiz címe
+és rövid leírása is. -->
+
+<div class="card mt-5">
+  <div class="card-header">
+    <h3 class="text-center text-uppercase font-weight-bold mt-2">Choose a quize!</h3>
+  </div>
+</div>
 
 <div class="d-lg-flex flex-column flex-lg-row justify-content-between">
     <a *ngFor="let quiz of quizzes$ | async" [routerLink]="['quiz/'+quiz.id]" class="text-dark">
     <div class="card-deck my-4 m-1">
-      <div class="card p-0">
+      <div class="quiz card p-0">
         <img class="card-img-top m-0" [src]="quiz.image" alt="">
         <div class="card-body">
           <h4 class="card-title font-weight-bold">{{quiz.title}}</h4>
