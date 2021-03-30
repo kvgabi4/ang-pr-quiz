@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Quiz } from 'src/app/model/quiz';
+import { QuizService } from 'src/app/service/quiz.service';
 
 @Component({
   selector: 'app-home',
@@ -7,9 +10,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  quizzes$: Observable<Quiz[]> = this.quizService.list$;
+  @Output() quiz: EventEmitter<Quiz> = new EventEmitter();
+
+  constructor(
+    private quizService: QuizService,
+  ) { }
 
   ngOnInit(): void {
+    this.quizService.getAll();
   }
+
+  // chooseQuiz(quiz: Quiz): void {
+  //   this.quiz.emit(quiz);
+  //   console.log(quiz);
+  // }
 
 }

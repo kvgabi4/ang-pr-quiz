@@ -1,1 +1,16 @@
-<app-quiz></app-quiz>
+<!-- <app-quiz [currentQuiz]="quiz"></app-quiz> -->
+
+<div class="d-lg-flex flex-column flex-lg-row justify-content-between">
+    <a *ngFor="let quiz of quizzes$ | async" [routerLink]="['quiz/'+quiz.id]" class="text-dark">
+    <div class="card-deck my-4 m-1">
+      <div class="card p-0">
+        <img class="card-img-top m-0" [src]="quiz.image" alt="">
+        <div class="card-body">
+          <h4 class="card-title font-weight-bold">{{quiz.title}}</h4>
+          <p class="card-text">{{quiz.description}}</p>
+          <p class="card-text">In this quiz you can find {{quiz.questions.length}} questions.</p>
+        </div>
+      </div>
+    </div>
+  </a>
+  </div>

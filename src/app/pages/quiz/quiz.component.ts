@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { filter, map, switchMap, tap } from 'rxjs/operators';
 import { Question } from 'src/app/model/question';
@@ -21,7 +22,14 @@ export class QuizComponent implements OnInit {
   points: number = 0;
   choosen: string = '';
 
-  quiz$: Observable<Quiz> = this.quizService.get(2);
+
+  quiz$: Observable<Quiz> = this.activatedRoute.params.pipe(
+    switchMap(params => this.quizService.get(params.id))
+  );
+  colors: string[] = ['danger', 'primary', 'warning'];
+  color: string = 'primary';
+
+  // quiz$: Observable<Quiz> = this.quizService.get(1);
 
   questions$: Observable<Question[]> = this.questionService.list$;
 
@@ -31,9 +39,10 @@ export class QuizComponent implements OnInit {
 
 
   constructor(
+    private activatedRoute: ActivatedRoute,
     private quizService: QuizService,
     private questionService: QuestionService,
-    private config: ConfigService,
+    // private config: ConfigService,
   ) { }
 
   ngOnInit(): void {
@@ -42,6 +51,8 @@ export class QuizComponent implements OnInit {
 
     this.quiz$.subscribe(item => {
       this.questionIdArray = item.questions;
+      this.color = this.colors[item.id - 1];
+      console.log(this.color)
     })
   }
 
