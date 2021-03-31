@@ -10,6 +10,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { QuizComponent } from './pages/quiz/quiz.component';
 import { AdminComponent } from './pages/admin/admin.component';
 import { FilterPipe } from './pipe/filter.pipe';
+import { SorterPipe } from './pipe/sorter.pipe';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { FilterPipe } from './pipe/filter.pipe';
     QuizComponent,
     AdminComponent,
     FilterPipe,
+    SorterPipe,
   ],
   imports: [
     BrowserModule,

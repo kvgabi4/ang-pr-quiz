@@ -37,8 +37,8 @@ gomb van az új quiz létrehozására. -->
         </tr>
       </thead>
       <tbody>
-        <!-- <tr *ngFor="let quiz of quizzes$ | async | filter:phrase:filterKey | sorter:columnKey"> -->
-        <tr *ngFor="let quiz of quizzes$ | async | filter:phrase:filterKey">
+        <tr *ngFor="let quiz of quizzes$ | async | filter:phrase:filterKey | sorter:columnKey">
+        <!-- <tr *ngFor="let quiz of quizzes$ | async | filter:phrase:filterKey"> -->
         <!-- <tr *ngFor="let quiz of quizzes$ | async "> -->
           <td>{{ quiz.id }}</td>
           <td>{{ quiz.title }}</td>
