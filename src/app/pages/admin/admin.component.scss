@@ -4,7 +4,11 @@
 
 table {
   thead {
+    th {
+      border-bottom: 4px solid rgba(90,90,90,0.2);
+    }
     th:hover {
+      border-bottom: 4px solid rgb(17, 122, 139);
       font-weight: bold;
       cursor: pointer;
       user-select: none;

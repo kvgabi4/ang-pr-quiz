@@ -17,7 +17,7 @@ gomb van az új quiz létrehozására. -->
 
     <!-- Add new -->
     <div class="card card-plain my-3">
-      <button [routerLink]="['quiz-edit/0']" type="button" class="btn card bg-light btn-block btn-lg">
+      <button [routerLink]="['quiz-edit/0']" type="button" class="btn btn-outline-info btn-block btn-lg">
         Add new quiz
       </button>
     </div>
@@ -38,8 +38,6 @@ gomb van az új quiz létrehozására. -->
       </thead>
       <tbody>
         <tr *ngFor="let quiz of quizzes$ | async | filter:phrase:filterKey | sorter:columnKey">
-        <!-- <tr *ngFor="let quiz of quizzes$ | async | filter:phrase:filterKey"> -->
-        <!-- <tr *ngFor="let quiz of quizzes$ | async "> -->
           <td>{{ quiz.id }}</td>
           <td>{{ quiz.title }}</td>
           <td>{{ quiz.description }}</td>
