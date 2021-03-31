@@ -17,7 +17,8 @@ több kérdés típus. -->
       <div *ngIf="(quiz$ | async)?.questions?.includes(question.id)">
         <h1 class="text-secondary font-weight-bold">{{serialNumber+1}}</h1>
         <h3 class="mx-5 my-3" [class]="'text-'+color">{{question.question}}</h3>
-        <form #myForm="ngForm" (ngSubmit)="nextQuestion(myForm.value, question)" class="mx-5" >
+
+        <form #myForm="ngForm" (ngSubmit)="nextQuestion(myForm, question)" class="mx-5" >
           <div class="form-check" *ngFor="let answer of question.answers">
             <label class="form-check-label mt-2" [for]="answer.id">
               <input class="form-check-input mt-2" type="radio" [name]="answer.id.toString()" [id]="answer.id"
@@ -27,7 +28,7 @@ több kérdés típus. -->
           </div>
 
           <!-- Next Button -->
-          <button [disabled]="myForm.invalid" type="submit" class="btn btn-lg btn-block my-5" [class]="'btn-'+color">
+          <button [disabled]="!myForm.valid" type="submit" class="btn btn-lg btn-block my-5" [class]="'btn-'+color">
             Next question&nbsp;
             <i class="fa fa-arrow-right" aria-hidden="true"></i>
           </button>

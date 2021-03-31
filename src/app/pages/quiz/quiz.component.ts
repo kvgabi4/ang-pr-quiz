@@ -62,6 +62,8 @@ export class QuizComponent implements OnInit {
 
   nextQuestion(form: NgForm, question: Question) {
     this.choosen == 'true' ? this.points += question.points : this.points;
-    this.serialNumber < this.questionIdArray.length-1 ? this.serialNumber += 1 : this.submit();
+    this.serialNumber < this.questionIdArray.length - 1 ? this.serialNumber += 1 : this.submit();
+    // form.resetForm();
+    form.reset();
   }
 }
