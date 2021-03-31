@@ -1,0 +1,77 @@
+<!--
+QuizEditorComponent: itt lehet Quiz -t létrehozni vagy szerkeszteni. Erre
+egy űrlap szolgál, validációval. -->
+
+<div class="container">
+
+  <div class="row mt-5">
+    <div *ngIf="(quiz$ | async) as quiz" class="col-10 offset-1">
+      <h3 class="mb-5">Edit quiz</h3>
+      <form #quizForm="ngForm" (ngSubmit)="onUpdate(quizForm, quiz)">
+
+        <div class="form-group">
+          <div class="d-flex justify-content-between">
+            <label for="">title</label>
+            <div [hidden]="quizForm.controls.title?.valid" class="error-message mt-1">
+              The title must be at least 3 characters long.
+            </div>
+          </div>
+          <input name="title" [(ngModel)]="quiz.title" type="text" class="form-control"
+            pattern="^.{3,}$" required>
+        </div>
+
+        <div class="form-group">
+          <div class="d-flex justify-content-between">
+            <label for="">image</label>
+            <div [hidden]="quizForm.controls.image?.valid" class="error-message mt-1">
+              The image can be 5-50 characters long.
+            </div>
+          </div>
+          <input name="image" [(ngModel)]="quiz.image" type="text" class="form-control"
+            pattern="^.{5,50}$" required>
+        </div>
+
+        <div class="form-group">
+          <div class="d-flex justify-content-between">
+            <label for="">description</label>
+            <div [hidden]="quizForm.controls.description?.valid" class="error-message mt-1">
+              The description can be 5-200 characters long.
+            </div>
+          </div>
+          <input name="description" [(ngModel)]="quiz.description" type="text" class="form-control"
+            pattern="^.{5,200}$" required>
+        </div>
+
+        <div class="form-group">
+          <div class="d-flex justify-content-between">
+            <label for="">questions</label>
+            <div [hidden]="quizForm.controls.questions?.valid" class="error-message mt-1">
+              The questions must be integers.
+            </div>
+          </div>
+          <input name="questions" [(ngModel)]="quiz.questions" type="" class="form-control"
+            pattern="" required>
+        </div>
+
+        <div class="form-group">
+          <div class="d-flex justify-content-between">
+            <label for="">active</label>
+            <div [hidden]="quizForm.controls.active?.valid" class="error-message mt-1">
+              Choose status!
+            </div>
+          </div>
+          <select class="custom-select bquiz col-12 mr-5" name="active" [(ngModel)]="quiz.active" required>
+            <option *ngFor="let key of ['true', 'false']" [value]="[key]">{{key}}</option>
+          </select>
+        </div>
+
+        <!-- <button [disabled]="quizForm.invalid || clicked" (click)="showHtmlToaster(quiz)" type="submit" class="btn btn-primary btn-block btn-lg mt-2"> -->
+        <button [disabled]="quizForm.invalid || clicked" type="submit" class="btn btn-primary btn-block btn-lg mt-2">
+          <i *ngIf="!clicked" class="fa fa-save"></i>
+          <i *ngIf="clicked" class="fa fa-refresh"></i>
+        </button>
+      </form>
+    </div>
+  </div>
+
+</div>

@@ -17,7 +17,7 @@ gomb van az új quiz létrehozására. -->
 
     <!-- Add new -->
     <div class="card card-plain my-3">
-      <button [routerLink]="['quiz-edit/0']" type="button" class="btn btn-outline-info btn-block btn-lg">
+      <button [routerLink]="['/quiz-edit/0']" type="button" class="btn btn-outline-info btn-block btn-lg">
         Add new quiz
       </button>
     </div>
@@ -46,7 +46,7 @@ gomb van az új quiz létrehozására. -->
           <td><img class="quiz_image" [src]="quiz.image" [alt]="quiz.image"></td>
           <td>
             <div class="btn-group">
-              <button [routerLink]="['quiz/' + quiz.id]" class="btn btn-info">
+              <button [routerLink]="['/quiz-edit/' + quiz.id]" class="btn btn-info">
                 <i class="fa fa-pencil"></i>
               </button>
               <button (click)="onDelete(quiz)" class="btn btn-danger">
