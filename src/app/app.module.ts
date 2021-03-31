@@ -9,6 +9,7 @@ import { NavigationComponent } from './common/navigation/navigation.component';
 import { HomeComponent } from './pages/home/home.component';
 import { QuizComponent } from './pages/quiz/quiz.component';
 import { AdminComponent } from './pages/admin/admin.component';
+import { FilterPipe } from './pipe/filter.pipe';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { AdminComponent } from './pages/admin/admin.component';
     HomeComponent,
     QuizComponent,
     AdminComponent,
+    FilterPipe,
   ],
   imports: [
     BrowserModule,
