@@ -12,7 +12,7 @@ gomb van az új quiz létrehozására. -->
       <select class="form-control border col-3 col-12 col-lg-3 mr-lg-5 my-3 my-lg-0" [(ngModel)]="filterKey">
         <option *ngFor="let key of filterKeys" [value]="[key]">{{key}}</option>
       </select>
-      <input [(ngModel)]="phrase" class="filter-search border rounded col-lg-5 mx-lg-3" type="text" placeholder="Search...">
+      <input [(ngModel)]="phrase" name="phrase" class="filter-search border rounded col-lg-5 mx-lg-3" type="text" placeholder="Search...">
     </div>
 
     <!-- Add new -->

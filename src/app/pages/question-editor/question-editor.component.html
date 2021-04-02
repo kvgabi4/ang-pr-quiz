@@ -1,0 +1,76 @@
+<!--
+QuizEditorComponent: itt lehet Quiz -t létrehozni vagy szerkeszteni. Erre
+egy űrlap szolgál, validációval. -->
+
+<!-- <div class="container" [class]="'bg-'+color"> -->
+<div class="container">
+
+  <div class="row mt-5">
+    <div class="col-12" *ngIf="(question$ | async) as question">
+      <h3 class="mb-5">Edit question</h3>
+      <form #questionForm="ngForm" (ngSubmit)="onUpdate(questionForm, question)">
+
+        <div class="form-group">
+          <div class="d-flex justify-content-between">
+            <label for="">question</label>
+            <div [hidden]="questionForm.controls.question?.valid" class="error-message mt-1">
+              The title must be at least 10 characters long.
+            </div>
+          </div>
+          <input name="question" [(ngModel)]="question.question" type="text" class="form-control font-weight-bold"
+            pattern="^.{10,}$" required>
+        </div>
+
+        <label for="">answers</label>
+        <div class="form-group" *ngFor="let answer of question.answers; index as i">
+          <div class="input-group-prepend">
+            <div class="input-group-text col-12">
+              <input class="form-control col-1" [value]="[answer.id]" [name]="i+''" type="number"
+                [(ngModel)]="answer.id" type="hidden">
+              <input  class="form-control col-1" [name]="answer.correct+i.toString()+''" type="checkbox"
+                [(ngModel)]="answer.correct">
+              <!-- <select class="form-control border col-3" [name]="answer.correct+i.toString()+''" [(ngModel)]="answer.correct">
+                <option *ngFor="let correct of trueFalse" [value]="[correct]">{{correct}}</option>
+              </select> -->
+              <input class="form-control col-10" [name]="answer.content+i.toString()+''" type="text"
+                [(ngModel)]="answer.content" [placeholder]="[i]+'. válasz'">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="d-flex justify-content-between">
+            <label for="">points</label>
+            <div [hidden]="questionForm.controls.points?.valid" class="error-message mt-1">
+              Point can be integer from 1 to 3.
+            </div>
+          </div>
+          <input name="points" [(ngModel)]="question.points" type="number" class="form-control" pattern="^[1-3]$"
+            required>
+        </div>
+
+        <div class="form-group">
+          <div class="d-flex justify-content-between">
+            <label for="">active</label>
+            <div [hidden]="questionForm.controls.active?.valid" class="error-message mt-1">
+              Choose status!
+            </div>
+          </div>
+          <select class="custom-select col-12 mr-5" name="active" [(ngModel)]="question.active" required>
+            <option *ngFor="let key of ['true', 'false']" [value]="[key]">{{key}}</option>
+          </select>
+        </div>
+
+
+
+        <!-- <button [disabled]="quizForm.invalid || clicked" (click)="showHtmlToaster(quiz)" type="submit" class="btn btn-primary btn-block btn-lg mt-2"> -->
+        <button [disabled]="questionForm.invalid || clicked" type="submit"
+          class="btn btn-primary btn-block btn-lg mt-2">
+          <i *ngIf="!clicked" class="fa fa-save"></i>
+          <i *ngIf="clicked" class="fa fa-refresh"></i>
+        </button>
+      </form>
+    </div>
+  </div>
+
+</div>

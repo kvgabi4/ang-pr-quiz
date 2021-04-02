@@ -1,11 +1,13 @@
 <!--
-QuizEditorComponent: itt lehet Quiz -t létrehozni vagy szerkeszteni. Erre
-egy űrlap szolgál, validációval. -->
+QuestionEditorComponent: ez a QuizEditorComponent -ből nyílik meg, a
+`New Question` gombra kattintva. Egy kérdés csak egy Quiz -hez tartozhat. Ez is
+egy űrlap, ahol validálva lehet bevinni az egyes kérdések adatait. -->
 
+<!-- <div class="container" [class]="'bg-'+color"> -->
 <div class="container">
-
   <div class="row mt-5">
-    <div *ngIf="(quiz$ | async) as quiz" class="col-10 offset-1">
+    <div class="col-12">
+    <div *ngIf="(quiz$ | async) as quiz">
       <h3 class="mb-5">Edit quiz</h3>
       <form #quizForm="ngForm" (ngSubmit)="onUpdate(quizForm, quiz)">
 
@@ -16,7 +18,7 @@ egy űrlap szolgál, validációval. -->
               The title must be at least 3 characters long.
             </div>
           </div>
-          <input name="title" [(ngModel)]="quiz.title" type="text" class="form-control"
+          <input name="title" [(ngModel)]="quiz.title" type="text" class="form-control font-weight-bold"
             pattern="^.{3,}$" required>
         </div>
 
@@ -27,8 +29,7 @@ egy űrlap szolgál, validációval. -->
               The image can be 5-50 characters long.
             </div>
           </div>
-          <input name="image" [(ngModel)]="quiz.image" type="text" class="form-control"
-            pattern="^.{5,50}$" required>
+          <input name="image" [(ngModel)]="quiz.image" type="text" class="form-control" pattern="^.{5,50}$" required>
         </div>
 
         <div class="form-group">
@@ -38,19 +39,8 @@ egy űrlap szolgál, validációval. -->
               The description can be 5-200 characters long.
             </div>
           </div>
-          <input name="description" [(ngModel)]="quiz.description" type="text" class="form-control"
-            pattern="^.{5,200}$" required>
-        </div>
-
-        <div class="form-group">
-          <div class="d-flex justify-content-between">
-            <label for="">questions</label>
-            <div [hidden]="quizForm.controls.questions?.valid" class="error-message mt-1">
-              The questions must be integers.
-            </div>
-          </div>
-          <input name="questions" [(ngModel)]="quiz.questions" type="" class="form-control"
-            pattern="" required>
+          <input name="description" [(ngModel)]="quiz.description" type="text" class="form-control" pattern="^.{5,200}$"
+            required>
         </div>
 
         <div class="form-group">
@@ -65,13 +55,100 @@ egy űrlap szolgál, validációval. -->
           </select>
         </div>
 
-        <!-- <button [disabled]="quizForm.invalid || clicked" (click)="showHtmlToaster(quiz)" type="submit" class="btn btn-primary btn-block btn-lg mt-2"> -->
+        <div class="form-group">
+          <div class="d-flex justify-content-between">
+            <label for="">questions</label>
+            <div [hidden]="quizForm.controls.questions?.valid" class="error-message mt-1">
+              The questions must be integers.
+            </div>
+          </div>
+          <input name="questions" [(ngModel)]="quiz.questions" type="" class="form-control" pattern="" required>
+        </div>
+
+        <p>questions</p>
+        <span class="text-right">You can find {{quiz.questions.length}} questions in this quiz right now.</span>
+        <!-- Add new -->
+        <div class="card card-plain my-3">
+          <button [routerLink]="['/quiz-edit/'+quiz.id+'/0']" type="button" class="btn btn-outline-info">
+            Add new question
+          </button>
+        </div>
+
+        <!-- <div class="d-flex flex-row flex-wrap justify-content-start">
+          <div *ngFor="let question of questions$ | async" class="col-xl-4 p-0 my-2">
+            <div *ngIf="!(quiz$ | async)?.questions?.includes(question.id)" style="display: none;" class="col-0 p-0 m-0"></div>
+            <div *ngIf="(quiz$ | async)?.questions?.includes(question.id)" class="card m-2 h-100">
+              <div class="card-header d-flex flex-row justify-content-between align-items-center p-0">
+                <p class="font-weight-bold col-2 m-1 p-0 pl-2">{{ question.id }}.</p>
+                <p class="font-weight-bold col-9 m-1 pl-0">{{ question.question }}</p>
+              </div>
+              <div class="card-body p-0 pt-2">
+                <div *ngFor="let answer of question.answers" class="card-text d-flex flex-wrap">
+                  <div class="col-3" *ngIf="answer.correct===true" [class]="'text-success'">{{ answer.correct }}</div>
+                  <div class="col-3" *ngIf="answer.correct===false" [class]="'text-secondary'">{{ answer.correct }}</div>
+                  <div class="col-9" *ngIf="answer.correct===true" [class]="'text-success'">{{ answer.content }}</div>
+                  <div class="col-9" *ngIf="answer.correct===false" [class]="'text-secondary'">{{ answer.content }}</div>
+                </div>
+              </div>
+                <div class="card-footer d-flex flex-row justify-content-between align-items-center mt-auto">
+                  <p class="m-0">{{ question.points }} points</p>
+                  <p class="m-0">active: {{ question.active }}</p>
+                  <div class="btn-group">
+                    <button [routerLink]="['/quiz-edit/' + quiz.id +'/'+ question.id]" class="btn btn-info">
+                      <i class="fa fa-pencil"></i>
+                    </button>
+                    <button (click)="onDelete(question, quiz)" class="btn btn-danger">
+                      <i class="fa fa-trash"></i>
+                    </button>
+                  </div>
+                </div>
+            </div>
+          </div>
+        </div> -->
+
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Question</th>
+              <th>Answers</th>
+              <th>Points</th>
+              <th>Active</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let question of questions$ | async">
+              <ng-container *ngIf="(quiz$ | async)?.questions?.includes(question.id)">
+                <td>{{ question.id }}</td>
+                <td>{{ question.question }}</td>
+                <td>
+                  <div *ngFor="let answer of question.answers">{{ answer.correct }} - {{ answer.content }}</div>
+                </td>
+                <td>{{ question.points }}</td>
+                <td>{{ question.active }}</td>
+                <td>
+                  <div class="btn-group">
+                    <button [routerLink]="['/quiz-edit/' + quiz.id]" class="btn btn-info">
+                      <i class="fa fa-pencil"></i>
+                    </button>
+                    <button (click)="onDelete(question, quiz)" class="btn btn-danger">
+                      <i class="fa fa-trash"></i>
+                    </button>
+                  </div>
+                </td>
+              </ng-container>
+            </tr>
+          </tbody>
+        </table>
+
         <button [disabled]="quizForm.invalid || clicked" type="submit" class="btn btn-primary btn-block btn-lg mt-2">
           <i *ngIf="!clicked" class="fa fa-save"></i>
           <i *ngIf="clicked" class="fa fa-refresh"></i>
         </button>
       </form>
     </div>
+  </div>
   </div>
 
 </div>

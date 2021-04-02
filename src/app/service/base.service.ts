@@ -34,27 +34,30 @@ export class BaseService<T extends { id: number }> {
     return this.http.get<T>(`${this.config.apiUrl}/${this.entityName}/${id}`,{ withCredentials: true });
   }
 
-  // create1(entity: T): Observable<T> {
-  //   return this.http.post<T>(
-  //     `${this.config.apiUrl}/${this.entityName}`,
-  //     entity).pipe(
-  //       tap(e => {
-  //         this.getAll();
-  //         console.log(entity)
-  //       })
-  //     );
-  // }
-
-  create(entity: T): void {
-    this.http.post<T>(`${this.config.apiUrl}/${this.entityName}`, entity
-    ).subscribe(() => this.getAll());
+  create(entity: T): Observable<T> {
+    return this.http.post<T>(
+      `${this.config.apiUrl}/${this.entityName}`, entity)
+      // .pipe(
+      //   tap(e => {
+      //     this.getAll();
+      //     console.log(entity)
+      //   })
+      // );
   }
+
+  // create1(entity: T): void {
+  //   this.http.post<T>(`${this.config.apiUrl}/${this.entityName}`, entity
+  //   ).subscribe(() => this.getAll());
+  // }
 
   update(entity: T): Observable<T> {
     return this.http.patch<T>(
       `${this.config.apiUrl}/${this.entityName}/${entity.id}`,
       entity
-    );
+    )
+      .pipe(
+      tap(e => this.getAll())
+    )
   }
 
   remove(entity: T): void {
